@@ -81,7 +81,7 @@ class GildedRoseTest {
     }
 
     @Test
-    void updateQuality_AgedItem_IncreaseQuality() {
+    void updateQuality_AgedItem_IncreaseQualityValue() {
         int sellIn = 10;
         int quality = 10;
         Item item = new Item("Aged Brie", sellIn, quality);
@@ -93,7 +93,7 @@ class GildedRoseTest {
     }
 
     @Test
-    void updateQuality_AgedItem_IncreaseQualityLimitIsFifty() {
+    void updateQuality_AgedItem_IncreaseQualityValueLimitIsFifty() {
         int sellIn = 10;
         int quality = 50;
         Item item = new Item("Aged Brie", sellIn, quality);
@@ -138,6 +138,66 @@ class GildedRoseTest {
         inventory.updateQuality();
 
         assertEquals(10, item.quality, "A legendary item never has to be sold, hence no decrease in quality value.");
+    }
+
+    @Test
+    void updateQuality_BackstagePasses_IncreaseQualityValue() {
+        Item item = new Item("Backstage passes to a TAFKAL80ETC concert", 15, 20);
+        GildedRose subject = new GildedRose(new Item[]{item});
+
+        subject.updateQuality();
+
+        assertEquals(21, item.quality);
+    }
+
+    @Test
+    void updateQuality_BackstagePasses_IncreaseQualityValueByTwo_WhenSellInValueIsTenOrLess() {
+        Item item = new Item("Backstage passes to a TAFKAL80ETC concert", 10, 20);
+        GildedRose subject = new GildedRose(new Item[]{item});
+
+        subject.updateQuality();
+
+        assertEquals(22, item.quality);
+    }
+
+    @Test
+    void updateQuality_BackstagePasses_IncreaseQualityValueLimitIsFifty() {
+        Item item = new Item("Backstage passes to a TAFKAL80ETC concert", 10, 50);
+        GildedRose subject = new GildedRose(new Item[]{item});
+
+        subject.updateQuality();
+
+        assertEquals(50, item.quality);
+    }
+
+    @Test
+    void updateQuality_BackstagePasses_IncreaseQualityValueByTwo_WhenSellInValueIsFiveOrLess() {
+        Item item = new Item("Backstage passes to a TAFKAL80ETC concert", 5, 20);
+        GildedRose subject = new GildedRose(new Item[]{item});
+
+        subject.updateQuality();
+
+        assertEquals(23, item.quality);
+    }
+
+    @Test
+    void updateQuality_BackstagePasses_IncreaseQualityValueUpToFifty_WhenSellInValueIsFiveOrLess() {
+        Item item = new Item("Backstage passes to a TAFKAL80ETC concert", 5, 49);
+        GildedRose subject = new GildedRose(new Item[]{item});
+
+        subject.updateQuality();
+
+        assertEquals(50, item.quality);
+    }
+
+    @Test
+    void updateQuality_BackstagePasses_UpdateQualityToZero_WhenSellInValueIsZeroOrLess() {
+        Item item = new Item("Backstage passes to a TAFKAL80ETC concert", 0, 20);
+        GildedRose subject = new GildedRose(new Item[]{item});
+
+        subject.updateQuality();
+
+        assertEquals(0, item.quality);
     }
 
 }

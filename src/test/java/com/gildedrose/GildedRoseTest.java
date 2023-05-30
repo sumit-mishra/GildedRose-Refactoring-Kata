@@ -171,7 +171,7 @@ class GildedRoseTest {
     }
 
     @Test
-    void updateQuality_BackstagePasses_IncreaseQualityValueByTwo_WhenSellInValueIsFiveOrLess() {
+    void updateQuality_BackstagePasses_IncreaseQualityValueByThree_WhenSellInValueIsFiveOrLess() {
         Item item = new Item("Backstage passes to a TAFKAL80ETC concert", 5, 20);
         GildedRose subject = new GildedRose(new Item[]{item});
 

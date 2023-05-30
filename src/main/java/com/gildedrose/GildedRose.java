@@ -1,5 +1,7 @@
 package com.gildedrose;
 
+import com.gildedrose.inventory.InventoryItem;
+
 class GildedRose {
     Item[] items;
 
@@ -9,8 +11,7 @@ class GildedRose {
 
     public void updateQuality() {
         for (Item item : items) {
-            //caller creates pattern
-            InventoryItem.create(item).dailyUpdate();
+            InventoryItem.create(item).dailyUpdate(); //caller creates pattern
         }
     }
 

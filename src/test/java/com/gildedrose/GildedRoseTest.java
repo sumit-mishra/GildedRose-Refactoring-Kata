@@ -8,26 +8,26 @@ class GildedRoseTest {
 
     @Test
     void updateQuality_NormalItem_DecreaseSellInValueByOne() {
-        int initialSellIn = 10;
-        int initialQuality = 10;
-        Item normalItem = new Item("+5 Dexterity Vest", initialSellIn, initialQuality);
+        int sellInDays = 10;
+        int qualityValue = 10;
+        Item normalItem = new Item("+5 Dexterity Vest", sellInDays, qualityValue);
         GildedRose inventory = new GildedRose(new Item[]{normalItem});
 
         inventory.updateQuality();
 
-        assertEquals(initialSellIn - 1, normalItem.sellIn);
+        assertEquals(sellInDays - 1, normalItem.sellIn);
     }
 
     @Test
     void updateQuality_NormalItem_DecreaseQualityValueByOne() {
-        int initialSellIn = 10;
-        int initialQuality = 10;
-        Item normalItem = new Item("Elixir of the Mongoose", initialSellIn, initialQuality);
+        int sellInDays = 10;
+        int qualityValue = 10;
+        Item normalItem = new Item("Elixir of the Mongoose", sellInDays, qualityValue);
         GildedRose inventory = new GildedRose(new Item[]{normalItem});
 
         inventory.updateQuality();
 
-        assertEquals(initialQuality - 1, normalItem.quality);
+        assertEquals(qualityValue - 1, normalItem.quality);
     }
 
     @Test
@@ -57,10 +57,10 @@ class GildedRoseTest {
     }
 
     @Test
-    void updateQuality_NormalItem_DegradesTwiceAsFast_WhenSellInValueIsNegative() {
-        int sellIn = -1;
-        int quality = 10;
-        Item item = new Item("Elixir of the Mongoose", sellIn, quality);
+    void updateQuality_NormalItem_DecreasesQualityTwiceAsFast_WhenSellInValueIsNegative() {
+        int sellInDays = -1;
+        int qualityValue = 10;
+        Item item = new Item("Elixir of the Mongoose", sellInDays, qualityValue);
         GildedRose inventory = new GildedRose(new Item[]{item});
 
         inventory.updateQuality();
@@ -70,9 +70,9 @@ class GildedRoseTest {
 
     @Test
     void updateQuality_NormalItem_QualityIsNeverNegative() {
-        int sellIn = 5;
-        int quality = 0;
-        Item item = new Item("Elixir of the Mongoose", sellIn, quality);
+        int sellInDays = 5;
+        int qualityValue = 0;
+        Item item = new Item("Elixir of the Mongoose", sellInDays, qualityValue);
         GildedRose inventory = new GildedRose(new Item[]{item});
 
         inventory.updateQuality();
@@ -82,33 +82,33 @@ class GildedRoseTest {
 
     @Test
     void updateQuality_AgedItem_IncreaseQualityValue() {
-        int sellIn = 10;
-        int quality = 10;
-        Item item = new Item("Aged Brie", sellIn, quality);
+        int sellInDays = 10;
+        int qualityValue = 10;
+        Item item = new Item("Aged Brie", sellInDays, qualityValue);
         GildedRose inventory = new GildedRose(new Item[]{item});
 
         inventory.updateQuality();
 
-        assertEquals(quality + 1, item.quality, "Aged items increases quality value by 1");
+        assertEquals(qualityValue + 1, item.quality, "Aged items increases quality value by 1");
     }
 
     @Test
     void updateQuality_AgedItem_IncreaseQualityValueLimitIsFifty() {
-        int sellIn = 10;
-        int quality = 50;
-        Item item = new Item("Aged Brie", sellIn, quality);
+        int sellInDays = 10;
+        int qualityValue = 50;
+        Item item = new Item("Aged Brie", sellInDays, qualityValue);
         GildedRose inventory = new GildedRose(new Item[]{item});
 
         inventory.updateQuality();
 
-        assertEquals(quality, item.quality, "Aged items quality value increase stops at 50.");
+        assertEquals(qualityValue, item.quality, "Aged items quality value increase stops at 50.");
     }
 
     @Test
     void updateQuality_AgedItem_IncreaseQualityTwiceAsFast_WhenSellInValueIsZeroOrLess() {
-        int sellIn = -1;
-        int quality = 10;
-        Item item = new Item("Aged Brie", sellIn, quality);
+        int sellInDays = -1;
+        int qualityValue = 10;
+        Item item = new Item("Aged Brie", sellInDays, qualityValue);
         GildedRose inventory = new GildedRose(new Item[]{item});
 
         inventory.updateQuality();
@@ -118,9 +118,9 @@ class GildedRoseTest {
 
     @Test
     void updateQuality_LegendaryItem_NeverDecreaseSellInValue() {
-        int sellIn = -1;
-        int quality = 10;
-        Item item = new Item("Sulfuras, Hand of Ragnaros", sellIn, quality);
+        int sellInDays = -1;
+        int qualityValue = 10;
+        Item item = new Item("Sulfuras, Hand of Ragnaros", sellInDays, qualityValue);
         GildedRose inventory = new GildedRose(new Item[]{item});
 
         inventory.updateQuality();
@@ -130,9 +130,9 @@ class GildedRoseTest {
 
     @Test
     void updateQuality_LegendaryItem_NeverDecreaseQualityValue() {
-        int sellIn = -1;
-        int quality = 10;
-        Item item = new Item("Sulfuras, Hand of Ragnaros", sellIn, quality);
+        int sellInDays = -1;
+        int qualityValue = 10;
+        Item item = new Item("Sulfuras, Hand of Ragnaros", sellInDays, qualityValue);
         GildedRose inventory = new GildedRose(new Item[]{item});
 
         inventory.updateQuality();
@@ -142,60 +142,120 @@ class GildedRoseTest {
 
     @Test
     void updateQuality_BackstagePasses_IncreaseQualityValue() {
-        Item item = new Item("Backstage passes to a TAFKAL80ETC concert", 15, 20);
-        GildedRose subject = new GildedRose(new Item[]{item});
+        int sellInDays = 15;
+        int qualityValue = 20;
+        Item item = new Item("Backstage passes to a TAFKAL80ETC concert", sellInDays, qualityValue);
+        GildedRose inventory = new GildedRose(new Item[]{item});
 
-        subject.updateQuality();
+        inventory.updateQuality();
 
         assertEquals(21, item.quality);
     }
 
     @Test
     void updateQuality_BackstagePasses_IncreaseQualityValueByTwo_WhenSellInValueIsTenOrLess() {
-        Item item = new Item("Backstage passes to a TAFKAL80ETC concert", 10, 20);
-        GildedRose subject = new GildedRose(new Item[]{item});
+        int sellInDays = 10;
+        int qualityValue = 20;
+        Item item = new Item("Backstage passes to a TAFKAL80ETC concert", sellInDays, qualityValue);
+        GildedRose inventory = new GildedRose(new Item[]{item});
 
-        subject.updateQuality();
+        inventory.updateQuality();
 
         assertEquals(22, item.quality);
     }
 
     @Test
     void updateQuality_BackstagePasses_IncreaseQualityValueLimitIsFifty() {
-        Item item = new Item("Backstage passes to a TAFKAL80ETC concert", 10, 50);
-        GildedRose subject = new GildedRose(new Item[]{item});
+        int sellInDays = 10;
+        int qualityValue = 50;
+        Item item = new Item("Backstage passes to a TAFKAL80ETC concert", sellInDays, qualityValue);
+        GildedRose inventory = new GildedRose(new Item[]{item});
 
-        subject.updateQuality();
+        inventory.updateQuality();
 
         assertEquals(50, item.quality);
     }
 
     @Test
     void updateQuality_BackstagePasses_IncreaseQualityValueByThree_WhenSellInValueIsFiveOrLess() {
-        Item item = new Item("Backstage passes to a TAFKAL80ETC concert", 5, 20);
-        GildedRose subject = new GildedRose(new Item[]{item});
+        int sellInDays = 5;
+        int qualityValue = 20;
+        Item item = new Item("Backstage passes to a TAFKAL80ETC concert", sellInDays, qualityValue);
+        GildedRose inventory = new GildedRose(new Item[]{item});
 
-        subject.updateQuality();
+        inventory.updateQuality();
 
         assertEquals(23, item.quality);
     }
 
     @Test
     void updateQuality_BackstagePasses_IncreaseQualityValueUpToFifty_WhenSellInValueIsFiveOrLess() {
-        Item item = new Item("Backstage passes to a TAFKAL80ETC concert", 5, 49);
-        GildedRose subject = new GildedRose(new Item[]{item});
+        int sellInDays = 5;
+        int qualityValue = 49;
+        Item item = new Item("Backstage passes to a TAFKAL80ETC concert", sellInDays, qualityValue);
+        GildedRose inventory = new GildedRose(new Item[]{item});
 
-        subject.updateQuality();
+        inventory.updateQuality();
 
         assertEquals(50, item.quality);
     }
 
     @Test
     void updateQuality_BackstagePasses_UpdateQualityToZero_WhenSellInValueIsZeroOrLess() {
-        Item item = new Item("Backstage passes to a TAFKAL80ETC concert", 0, 20);
-        GildedRose subject = new GildedRose(new Item[]{item});
+        int sellInDays = 0;
+        int qualityValue = 10;
+        Item item = new Item("Backstage passes to a TAFKAL80ETC concert", sellInDays, qualityValue);
+        GildedRose inventory = new GildedRose(new Item[]{item});
 
-        subject.updateQuality();
+        inventory.updateQuality();
+
+        assertEquals(0, item.quality);
+    }
+
+    @Test
+    void updateQuality_ConjuredItem_DecreasesQualityTwiceAsFastAsNormalItem() {
+        int sellInDays = 10;
+        int qualityValue = 10;
+        Item item = new Item("Conjured", sellInDays, qualityValue);
+        GildedRose inventory = new GildedRose(new Item[]{item});
+
+        inventory.updateQuality();
+
+        assertEquals(8, item.quality);
+    }
+
+    @Test
+    void updateQuality_ConjuredItem_DecreasesSellInValue() {
+        int sellInDays = 10;
+        int qualityValue = 10;
+        Item item = new Item("Conjured", sellInDays, qualityValue);
+        GildedRose inventory = new GildedRose(new Item[]{item});
+
+        inventory.updateQuality();
+
+        assertEquals(9, item.sellIn);
+    }
+
+    @Test
+    void updateQuality_ConjuredItem_DecreasesQualityValueByFour_WhenSellInValueIsZeroOrLess() {
+        int sellInDays = 0;
+        int qualityValue = 10;
+        Item item = new Item("Conjured", sellInDays, qualityValue);
+        GildedRose inventory = new GildedRose(new Item[]{item});
+
+        inventory.updateQuality();
+
+        assertEquals(6, item.quality);
+    }
+
+    @Test
+    void updateQuality_ConjuredItem_QualityIsNeverNegative() {
+        int sellInDays = 5;
+        int qualityValue = 0;
+        Item item = new Item("Conjured", sellInDays, qualityValue);
+        GildedRose inventory = new GildedRose(new Item[]{item});
+
+        inventory.updateQuality();
 
         assertEquals(0, item.quality);
     }

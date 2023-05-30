@@ -57,7 +57,7 @@ class GildedRoseTest {
     }
 
     @Test
-    void updateQuality_NormalItemDegradesTwiceAsFast_whenSellInValueIsNegative() {
+    void updateQuality_NormalItem_DegradesTwiceAsFast_WhenSellInValueIsNegative() {
         int sellIn = -1;
         int quality = 10;
         Item item = new Item("Elixir of the Mongoose", sellIn, quality);
@@ -69,7 +69,7 @@ class GildedRoseTest {
     }
 
     @Test
-    void updateQuality_NormalItemQuality_IsNeverNegative() {
+    void updateQuality_NormalItem_QualityIsNeverNegative() {
         int sellIn = 5;
         int quality = 0;
         Item item = new Item("Elixir of the Mongoose", sellIn, quality);
@@ -78,6 +78,66 @@ class GildedRoseTest {
         inventory.updateQuality();
 
         assertEquals(0, item.quality);
+    }
+
+    @Test
+    void updateQuality_AgedItem_IncreaseQuality() {
+        int sellIn = 10;
+        int quality = 10;
+        Item item = new Item("Aged Brie", sellIn, quality);
+        GildedRose inventory = new GildedRose(new Item[]{item});
+
+        inventory.updateQuality();
+
+        assertEquals(quality + 1, item.quality, "Aged items increases quality value by 1");
+    }
+
+    @Test
+    void updateQuality_AgedItem_IncreaseQualityLimitIsFifty() {
+        int sellIn = 10;
+        int quality = 50;
+        Item item = new Item("Aged Brie", sellIn, quality);
+        GildedRose inventory = new GildedRose(new Item[]{item});
+
+        inventory.updateQuality();
+
+        assertEquals(quality, item.quality, "Aged items quality value increase stops at 50.");
+    }
+
+    @Test
+    void updateQuality_AgedItem_IncreaseQualityTwiceAsFast_WhenSellInValueIsZeroOrLess() {
+        int sellIn = -1;
+        int quality = 10;
+        Item item = new Item("Aged Brie", sellIn, quality);
+        GildedRose inventory = new GildedRose(new Item[]{item});
+
+        inventory.updateQuality();
+
+        assertEquals(12, item.quality);
+    }
+
+    @Test
+    void updateQuality_LegendaryItem_NeverDecreaseSellInValue() {
+        int sellIn = -1;
+        int quality = 10;
+        Item item = new Item("Sulfuras, Hand of Ragnaros", sellIn, quality);
+        GildedRose inventory = new GildedRose(new Item[]{item});
+
+        inventory.updateQuality();
+
+        assertEquals(-1, item.sellIn, "A legendary item never has to be sold, hence no decrease in sellIn value.");
+    }
+
+    @Test
+    void updateQuality_LegendaryItem_NeverDecreaseQualityValue() {
+        int sellIn = -1;
+        int quality = 10;
+        Item item = new Item("Sulfuras, Hand of Ragnaros", sellIn, quality);
+        GildedRose inventory = new GildedRose(new Item[]{item});
+
+        inventory.updateQuality();
+
+        assertEquals(10, item.quality, "A legendary item never has to be sold, hence no decrease in quality value.");
     }
 
 }

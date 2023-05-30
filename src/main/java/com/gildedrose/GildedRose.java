@@ -9,11 +9,45 @@ class GildedRose {
 
     public void updateQuality() {
         for (Item item : items) {
-            validateAndUpdate(item);
+            updateItem(item);
         }
     }
 
-    private static void validateAndUpdate(Item item) {
+    private static void updateItem(Item item) {
+        updateQuality(item);
+
+        updateExpiry(item);
+
+        if (item.sellIn < 0) {
+            processExpired(item);
+        }
+    }
+
+    private static void processExpired(Item item) {
+        if (!item.name.equals("Aged Brie")) {
+            if (!item.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
+                if (item.quality > 0) {
+                    if (!item.name.equals("Sulfuras, Hand of Ragnaros")) {
+                        item.quality = item.quality - 1;
+                    }
+                }
+            } else {
+                item.quality = 0;
+            }
+        } else {
+            if (item.quality < 50) {
+                item.quality = item.quality + 1;
+            }
+        }
+    }
+
+    private static void updateExpiry(Item item) {
+        if (!item.name.equals("Sulfuras, Hand of Ragnaros")) {
+            item.sellIn = item.sellIn - 1;
+        }
+    }
+
+    private static void updateQuality(Item item) {
         if (!item.name.equals("Aged Brie")
                 && !item.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
             if (item.quality > 0) {
@@ -37,28 +71,6 @@ class GildedRose {
                             item.quality = item.quality + 1;
                         }
                     }
-                }
-            }
-        }
-
-        if (!item.name.equals("Sulfuras, Hand of Ragnaros")) {
-            item.sellIn = item.sellIn - 1;
-        }
-
-        if (item.sellIn < 0) {
-            if (!item.name.equals("Aged Brie")) {
-                if (!item.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
-                    if (item.quality > 0) {
-                        if (!item.name.equals("Sulfuras, Hand of Ragnaros")) {
-                            item.quality = item.quality - 1;
-                        }
-                    }
-                } else {
-                    item.quality = 0;
-                }
-            } else {
-                if (item.quality < 50) {
-                    item.quality = item.quality + 1;
                 }
             }
         }

@@ -16,27 +16,23 @@ public class InventoryItem {
     }
 
     public static InventoryItem create(Item item) {
-        if (item.name.equals(AGED_BRIE)) {
-            return new AgedBrie(item);
+        switch (item.name) {
+            case AGED_BRIE:
+                return new AgedBrie(item);
+            case BACKSTAGE_PASSES:
+                return new BackstagePasses(item);
+            case SULFURAS:
+                return new Sulfuras(item);
+            case CONJURED:
+                return new Conjured(item);
+            default:
+                return new InventoryItem(item);
         }
-        if (item.name.equals(BACKSTAGE_PASSES)) {
-            return new BackstagePasses(item);
-        }
-        if (item.name.equals(SULFURAS)) {
-            return new Sulfuras(item);
-        }
-        if (item.name.equals(CONJURED)) {
-            return new Conjured(item);
-        }
-
-        return new InventoryItem(item);
     }
 
     public void dailyUpdate() {
         updateQuality();
-
         updateExpiry();
-
         if (isExpired()) {
             processExpired();
         }

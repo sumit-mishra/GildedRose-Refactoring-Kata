@@ -40,6 +40,9 @@
 
 InventoryItem is a wrapper around Item with default behaviour.
 
+<img width="750" alt="image" src="https://github.com/sumit-mishra/GildedRose-Refactoring-Kata/assets/14976827/76661a64-ff55-4074-910b-b4696198a475">
+
+
 ### Possible Improvements
 
 - Introducing category and linking each inventory item to a category would be more resilient to further change

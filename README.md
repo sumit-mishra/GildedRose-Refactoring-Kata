@@ -35,10 +35,12 @@
 5 - It led to creational design pattern
 6 - Remove duplicate codes
 ```
+
 ![GildedRoseInventory](https://github.com/sumit-mishra/GildedRose-Refactoring-Kata/assets/14976827/6f11d44e-c9fb-41a5-b8a2-5eabc21548ae)
 
+InventoryItem is a wrapper around Item with default behaviour.
 
 ### Possible Improvements
 
-- Introducing category and linking each inventory item to a category would be more resilient to change
+- Introducing category and linking each inventory item to a category would be more resilient to further change
 

@@ -46,4 +46,5 @@ InventoryItem is a wrapper around Item with default behaviour.
 ### Possible Improvements
 
 - Introducing category and linking each inventory item to a category would be more resilient to further change
+- Project structre can be better by differentiating model objects, transfer objects.
 

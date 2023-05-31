@@ -11,7 +11,7 @@ class GildedRose {
 
     public void updateQuality() {
         for (Item item : items) {
-            InventoryItem.create(item).dailyUpdate(); //caller creates pattern
+            InventoryItem.create(item).dailyUpdate();
         }
     }
 

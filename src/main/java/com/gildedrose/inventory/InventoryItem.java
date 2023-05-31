@@ -2,13 +2,10 @@ package com.gildedrose.inventory;
 
 import com.gildedrose.Item;
 
-import static com.gildedrose.inventory.AgedBrie.AGED_BRIE;
-import static com.gildedrose.inventory.BackstagePasses.BACKSTAGE_PASSES;
-import static com.gildedrose.inventory.Conjured.CONJURED;
-import static com.gildedrose.inventory.Sulfuras.SULFURAS;
-
 public class InventoryItem {
 
+    public static final int FIFTY = 50;
+    public static final int ZERO_DAYS = 0;
     protected Item item;
 
     public InventoryItem(Item item) {
@@ -17,13 +14,13 @@ public class InventoryItem {
 
     public static InventoryItem create(Item item) {
         switch (item.name) {
-            case AGED_BRIE:
+            case AgedBrie.NAME:
                 return new AgedBrie(item);
-            case BACKSTAGE_PASSES:
+            case BackstagePasses.NAME:
                 return new BackstagePasses(item);
-            case SULFURAS:
+            case Sulfuras.NAME:
                 return new Sulfuras(item);
-            case CONJURED:
+            case Conjured.NAME:
                 return new Conjured(item);
             default:
                 return new InventoryItem(item);
@@ -51,19 +48,17 @@ public class InventoryItem {
     }
 
     protected void decreaseQuality() {
-        if (item.quality > 0) {
-            item.quality -= 1;
-        }
+        item.quality = Math.max(item.quality - 1, ZERO_DAYS);
     }
 
     protected void increaseQuality() {
-        if (item.quality < 50) {
+        if (item.quality < FIFTY) {
             item.quality += 1;
         }
     }
 
     protected boolean isExpired() {
-        return item.sellIn < 0;
+        return item.sellIn < ZERO_DAYS;
     }
 
 }

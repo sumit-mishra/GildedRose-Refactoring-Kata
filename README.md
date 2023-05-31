@@ -40,7 +40,7 @@
 
 InventoryItem is a wrapper around Item with default behaviour.
 
-<img width="750" alt="image" src="https://github.com/sumit-mishra/GildedRose-Refactoring-Kata/assets/14976827/76661a64-ff55-4074-910b-b4696198a475">
+<img width="751" alt="image" src="https://github.com/sumit-mishra/GildedRose-Refactoring-Kata/assets/14976827/a158ff22-8b1d-4b3d-84af-4317ab8a6cf3">
 
 
 ### Possible Improvements

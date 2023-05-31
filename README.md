@@ -35,7 +35,8 @@
 5 - It led to creational design pattern
 6 - Remove duplicate codes
 ```
-![img.png](img.png)
+![GildedRoseInventory](https://github.com/sumit-mishra/GildedRose-Refactoring-Kata/assets/14976827/6f11d44e-c9fb-41a5-b8a2-5eabc21548ae)
+
 
 ### Possible Improvements
 
